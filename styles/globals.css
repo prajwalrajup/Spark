@@ -19,6 +19,10 @@ main {
   align-items: center;
 }
 
+.title{
+  color: white
+}
+
 code {
   background: #fafafa;
   border-radius: 5px;
@@ -27,6 +31,7 @@ code {
 }
 
 .container {
+  background: #162beb;
   height: 100vh;
   display: flex;
   flex-direction: column;
