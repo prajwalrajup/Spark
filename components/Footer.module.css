@@ -12,3 +12,9 @@
   height: 1em;
   margin: 5px;
 }
+
+.link{
+  color: #FFFFFF;
+  margin: 0 0 0 10px;
+  text-decoration: none;
+}
