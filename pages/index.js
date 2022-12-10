@@ -49,7 +49,11 @@ export default function Home() {
       </Head>
 
       <main>
-        <Header title="Welcome to SPARK" />
+        <Header
+          title={
+            currentCardText === undefined ? "WELLCOME TO" : "WELLCOME TO SPARK"
+          }
+        />
         <Card text={currentCardText} onClick={cardClickHandler} />
       </main>
 
