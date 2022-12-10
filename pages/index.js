@@ -4,6 +4,7 @@ import Header from "@components/Header";
 import Footer from "@components/Footer";
 import Card from "@components/Card";
 import CardText from "../public/CardText.json";
+import { event } from "nextjs-google-analytics";
 
 export default function Home() {
   const [currentCardText, setCurrentCardText] = useState();
@@ -37,6 +38,9 @@ export default function Home() {
     }
     setCurrentCardText(CardText[cartTextContent]);
 
+    event("cardClick", {
+      cardIndex: cartTextContent,
+    });
     dict[cartTextContent.toString()] = "1";
     sessionStorage.setItem("cardTextIndex", JSON.stringify(dict));
   }
