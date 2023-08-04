@@ -1,0 +1,10 @@
+{
+    "newComponent": {
+        "componentsPath": "components"
+    },
+    "boardsPath": "_codux/boards",
+    "styling": {
+        "solution": "css modules"
+    },
+    "svgLoader": "both"
+}

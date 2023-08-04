@@ -12,5 +12,8 @@
     "nextjs-google-analytics": "^2.2.2",
     "react": "^18.0.0",
     "react-dom": "^18.0.0"
+  },
+  "devDependencies": {
+    "@wixc3/react-board": "^2.3.0"
   }
 }
