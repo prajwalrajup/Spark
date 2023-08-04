@@ -1,0 +1,27 @@
+name: Post Appreciation
+run-name: Post Appreciation
+on: 
+    pull_request:
+        types:
+            - closed
+        branches:
+            - main
+            - master
+
+jobs:
+    check_contributor_and_merge:
+        if: github.event.pull_request.merged == true
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v2
+
+            - name: Check if pull request is merged into main
+              run: |
+                # Check if the author is not part of your organization
+                if [[ "${{ github.event.pull_request.user.login }}" != "your-organization" ]]; then
+                    echo "PR author is an external contributor: ${{ github.event.pull_request.user.login }}"
+                else
+                    echo "PR author is part of your organization: ${{ github.event.pull_request.user.login }}"
+                fi
