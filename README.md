@@ -13,6 +13,6 @@ Vist the [Site](https://randomspark.netlify.app/) to start a conversation
 
 ![spark_page](public/spark_page.png)
 
-Just tap on the card to open up a random qustion for a stranger
+Just tap on the card to open up a random qustion for a stranger.
 
 ![](public/spark_qust.png)
