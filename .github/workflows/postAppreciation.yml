@@ -16,7 +16,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Install curl
-              run : apt-get install curl jq
+              run : sudo apt-get install curl jq
             
             - name: Get repo about
               run : |
