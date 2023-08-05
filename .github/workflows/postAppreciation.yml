@@ -1,5 +1,6 @@
 name: Post Appreciation
 run-name: Post Appreciation
+
 on: 
     pull_request:
         types:
@@ -10,18 +11,46 @@ on:
 
 jobs:
     check_contributor_and_merge:
-        if: github.event.pull_request.merged == true
+        if: github.event.pull_request.merged == true && github.event.pull_request.user.login != 'prajwalraju'
         runs-on: ubuntu-latest
-
         steps:
-            - name: Checkout repository
-              uses: actions/checkout@v2
+            - name: Install curl
+              run : apt-get install curl jq
+            
+            - name: Get repo about
+              run : |
+                # Get repo details
+                apiResponse=$(curl -L "https://api.github.com/repos/$GITHUB_REPOSITORY")
 
-            - name: Check if pull request is merged into main
-              run: |
-                # Check if the author is not part of your organization
-                if [[ "${{ github.event.pull_request.user.login }}" != "your-organization" ]]; then
-                    echo "PR author is an external contributor: ${{ github.event.pull_request.user.login }}"
-                else
-                    echo "PR author is part of your organization: ${{ github.event.pull_request.user.login }}"
-                fi
+                #  Get repo description
+                description=$(echo "$apiResponse" | jq -r '.description')
+                echo "$description"
+                
+                # get repo tags
+                topics_array=$(echo "$apiResponse" | jq -r '.topics[]')
+                topics_string=$(echo "$topics_array" | sed 's/^/#/; s/$/ /' | tr -d '\n')
+
+                # Get repos PR url 
+                echo "GITHUB_EVENT_PATH : $GITHUB_EVENT_PATH"
+                pull_number=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
+                PRURL="https://github.com/$GITHUB_REPOSITORY/pull/$pull_number"
+                
+                # make a post request to linkedin
+                curl -L "https://api.linkedin.com/v2/ugcPosts" \
+                    -H "Content-Type: application/json" \
+                    -H "Authorization: Bearer ${{env.linkedinAuth}}" \
+                    -d "{
+                        \"author\": \"urn:li:person:Pg-ex5GNjq\",
+                        \"lifecycleState\": \"PUBLISHED\",
+                        \"specificContent\": {
+                            \"com.linkedin.ugc.ShareContent\": {
+                                \"shareCommentary\": {
+                                    \"text\": \"🙌 A Big Thank You for Your Contribution! 🙌\n\nHey ${{ github.event.pull_request.user.login }},\n\nJust wanted to express my heartfelt thanks for your recent PR of $PRURL to our open source project $GITHUB_REPOSITORY. Your contribution is invaluable and greatly appreciated. It's folks like you who make our project thrive. Looking forward to more collaboration!\n\nSome things about project $GITHUB_REPOSITORY https://github.com/$GITHUB_REPOSITORY \n\n This project is a very minimal website to start a connection and spark a Conversation.\n\n #opensource $topics_string \"
+                                },
+                                \"shareMediaCategory\": \"NONE\"
+                            }
+                        },
+                        \"visibility\": {
+                            \"com.linkedin.ugc.MemberNetworkVisibility\": \"CONNECTIONS\"
+                        }
+                    }" 
