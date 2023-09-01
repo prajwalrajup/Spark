@@ -18,3 +18,6 @@ Just tap on the card to open up a random qustion for a stranger.
 ![](public/spark_qust.png)
 
 ## This application is written using next js
+
+## Test command
+- act pull_request -e .github/workflows/actPullRequestPayload.json

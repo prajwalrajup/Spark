@@ -39,7 +39,7 @@ jobs:
                 # make a post request to linkedin
                 curl -L "https://api.linkedin.com/v2/ugcPosts" \
                     -H "Content-Type: application/json" \
-                    -H "Authorization: Bearer ${{env.linkedinAuth}}" \
+                    -H "Authorization: Bearer ${{secrets.linkedinAuth}}" \
                     -d "{
                         \"author\": \"urn:li:person:Pg-ex5GNjq\",
                         \"lifecycleState\": \"PUBLISHED\",
