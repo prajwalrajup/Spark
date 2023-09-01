@@ -16,3 +16,5 @@ Vist the [Site](https://randomspark.netlify.app/) to start a conversation with a
 Just tap on the card to open up a random qustion for a stranger.
 
 ![](public/spark_qust.png)
+
+## This application is written using next js
