@@ -46,7 +46,7 @@ jobs:
                         \"specificContent\": {
                             \"com.linkedin.ugc.ShareContent\": {
                                 \"shareCommentary\": {
-                                    \"text\": \"🙌 A Big Thank You for Your Contribution! 🙌\n\nHey ${{ github.event.pull_request.user.login }},\n\nJust wanted to express my heartfelt thanks for your recent PR of $PRURL to our open source project $GITHUB_REPOSITORY. Your contribution is invaluable and greatly appreciated. It's folks like you who make our project thrive. Looking forward to more collaboration!\n\nSome things about project $GITHUB_REPOSITORY https://github.com/$GITHUB_REPOSITORY \n\n This project is a very minimal website to start a connection and spark a Conversation.\n\n #opensource $topics_string \"
+                                    \"text\": \"🙌 A Big Thank You for Your Contribution! 🙌\n\nHey ${{ github.event.pull_request.user.login }},\n\nJust wanted to express my heartfelt thanks for your recent PR of $PRURL to our open source project $GITHUB_REPOSITORY. Your contribution is invaluable and greatly appreciated. It's folks like you who make our project thrive. Looking forward to more collaboration!\nPlease check out https://github.com/${{ github.event.pull_request.user.login }} for there work \n\nSome things about the project $GITHUB_REPOSITORY https://github.com/$GITHUB_REPOSITORY \n\n $description.\n\n #opensource $topics_string \"
                                 },
                                 \"shareMediaCategory\": \"NONE\"
                             }
