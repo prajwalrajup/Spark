@@ -1,5 +1,4 @@
-name: Post Appreciation
-run-name: Post Appreciation
+name: Appreciation
 
 on: 
     pull_request:
@@ -10,48 +9,5 @@ on:
             - master
 
 jobs:
-    check_contributor_and_merge:
-        if: github.event.pull_request.merged == true
-        # if: github.event.pull_request.merged == true && github.event.pull_request.user.login != 'prajwalraju'
-        runs-on: ubuntu-latest
-        steps:
-            - name: Install curl
-              run : sudo apt-get install curl jq
-            
-            - name: Get repo about
-              run : |
-                # Get repo details
-                apiResponse=$(curl -L "https://api.github.com/repos/$GITHUB_REPOSITORY")
-
-                #  Get repo description
-                description=$(echo "$apiResponse" | jq -r '.description')
-                echo "$description"
-                
-                # get repo tags
-                topics_array=$(echo "$apiResponse" | jq -r '.topics[]')
-                topics_string=$(echo "$topics_array" | sed 's/^/#/; s/$/ /' | tr -d '\n')
-
-                # Get repos PR url 
-                echo "GITHUB_EVENT_PATH : $GITHUB_EVENT_PATH"
-                pull_number=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
-                PRURL="https://github.com/$GITHUB_REPOSITORY/pull/$pull_number"
-                
-                # make a post request to linkedin
-                curl -L "https://api.linkedin.com/v2/ugcPosts" \
-                    -H "Content-Type: application/json" \
-                    -H "Authorization: Bearer ${{secrets.linkedinAuth}}" \
-                    -d "{
-                        \"author\": \"urn:li:person:Pg-ex5GNjq\",
-                        \"lifecycleState\": \"PUBLISHED\",
-                        \"specificContent\": {
-                            \"com.linkedin.ugc.ShareContent\": {
-                                \"shareCommentary\": {
-                                    \"text\": \"🙌 A Big Thank You for Your Contribution! 🙌\n\nHey ${{ github.event.pull_request.user.login }},\n\nJust wanted to express my heartfelt thanks for your recent PR of $PRURL to our open source project $GITHUB_REPOSITORY. Your contribution is invaluable and greatly appreciated. It's folks like you who make our project thrive. Looking forward to more collaboration!\nPlease check out https://github.com/${{ github.event.pull_request.user.login }} for there work \n\nSome things about the project $GITHUB_REPOSITORY https://github.com/$GITHUB_REPOSITORY \n\n $description.\n\n #opensource $topics_string \"
-                                },
-                                \"shareMediaCategory\": \"NONE\"
-                            }
-                        },
-                        \"visibility\": {
-                            \"com.linkedin.ugc.MemberNetworkVisibility\": \"CONNECTIONS\"
-                        }
-                    }" 
+    Appreciation:
+        uses: prajwalraju/GitHubAppreciator/.github/workflows/GitHubAppreciator.yml@main
