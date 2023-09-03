@@ -11,3 +11,6 @@ on:
 jobs:
     Appreciation:
         uses: prajwalraju/GitHubAppreciator/.github/workflows/GitHubAppreciator.yml@main
+        
+        # Pass all secrets
+        secrets: inherit 
